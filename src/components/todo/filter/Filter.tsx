@@ -1,5 +1,5 @@
 import React, { FC, useContext, useMemo } from "react";
-import { TodosContext } from "../../../api/context/TodosContext";
+import { TodosContext } from "../../../store/context/TodosContext";
 import ClearButton from "../buttons/ClearButton";
 import FilterItems from "./FilterItems";
 import TodoFilterTrack from "./TodoFilterTrack";

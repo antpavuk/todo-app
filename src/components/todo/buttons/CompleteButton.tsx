@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
-import IButtonProps from "./IButtonProps";
+import ITodoButtonProps from "./ITodoButtonProps";
 
-const CompleteButton: FC<IButtonProps> = ({ isActive, onClick }) => (
+const CompleteButton: FC<ITodoButtonProps> = ({ isActive, onClick }) => (
   <button
     className={`complete-button ${isActive && "active"}`}
     type="button"

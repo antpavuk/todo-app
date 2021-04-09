@@ -2,8 +2,8 @@ import React, { FC, useContext, useMemo } from "react";
 import {
   FilterActivityContext,
   FilterActivityStatus,
-} from "../../api/context/FilterTodosActivityContext";
-import { TodosContext } from "../../api/context/TodosContext";
+} from "../../store/context/FilterTodosActivityContext";
+import { TodosContext } from "../../store/context/TodosContext";
 import Filter from "./filter/Filter";
 import TodoForm from "./TodoForm";
 import TodoItem from "./items/TodoItem";
@@ -13,23 +13,27 @@ const TodoMainComponent: FC = () => {
   const { filterActivityStatus: filterTodosActivityStatus } = useContext(
     FilterActivityContext
   );
+
   const isAnyTodoExisted = useMemo(() => todos.length !== 0, [todos.length]);
 
   return (
     <section className="main">
       <TodoForm />
       <div className="todo-list">
-        {todos &&
-          todos
-            .filter(
+        {useMemo(
+          () =>
+            todos.filter(
               todo =>
                 !filterTodosActivityStatus ||
                 (filterTodosActivityStatus === FilterActivityStatus.ACTIVE &&
                   todo.isActive) ||
                 (filterTodosActivityStatus === FilterActivityStatus.COMPLETED &&
                   !todo.isActive)
-            )
-            .map((todo, i) => <TodoItem key={i} {...{ todo, i }} />)}
+            ),
+          [todos, filterTodosActivityStatus]
+        ).map((todo, index) => (
+          <TodoItem key={index} {...{ todo, index }} />
+        ))}
       </div>
       {isAnyTodoExisted && <Filter />}
     </section>

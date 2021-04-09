@@ -1,12 +1,12 @@
 import { useState, createContext, FC, useCallback } from "react";
-import ITodo from "../Todo";
+import ITodo from "../../types/interfaces/ITodo";
 
 export type ContextType = {
   todos: ITodo[];
   addTodo: (todo: ITodo) => void;
-  removeTodoByIndex: (i: number) => void;
-  changeTodoActivityByIndex: (i: number) => void;
-  changeTodoValueByIndex: (value: string, i: number) => void;
+  removeTodoByIndex: (index: number) => void;
+  changeTodoActivityByIndex: (index: number) => void;
+  changeTodoValueByIndex: (value: string, index: number) => void;
   completeAllTodos: () => void;
   activateAllTodos: () => void;
   clearCompletedTodos: () => void;
@@ -19,26 +19,26 @@ export const TodosProvider: FC = ({ children }) => {
 
   const addTodo = (todo: ITodo): void => setTodos([todo, ...todos]);
 
-  const removeTodoByIndex = (i: number): void => {
-    const newTodos = todos.filter((_todo, todoIndex) => todoIndex !== i);
+  const removeTodoByIndex = (index: number): void => {
+    const newTodos = todos.filter((_todo, todoIndex) => todoIndex !== index);
 
     setTodos(newTodos);
   };
 
-  const changeTodoActivityByIndex = (i: number): void => {
+  const changeTodoActivityByIndex = (index: number): void => {
     const newTodos: ITodo[] = todos.map(
       (todo, todoIndex): ITodo =>
-        todoIndex === i ? { ...todo, isActive: !todo.isActive } : todo
+        todoIndex === index ? { ...todo, isActive: !todo.isActive } : todo
     );
 
     setTodos(newTodos);
   };
 
   const changeTodoValueByIndex = useCallback(
-    (value: string, i: number): void => {
+    (value: string, index: number): void => {
       const newTodos: ITodo[] = todos.map(
         (todo, todoIndex): ITodo => {
-          return todoIndex === i ? { ...todo, value } : todo;
+          return todoIndex === index ? { ...todo, value } : todo;
         }
       );
 

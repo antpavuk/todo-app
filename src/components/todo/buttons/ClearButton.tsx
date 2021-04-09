@@ -1,7 +1,7 @@
 import { FC } from "react";
-import IButtonProps from "./IButtonProps";
+import ITodoButtonProps from "./ITodoButtonProps";
 
-const ClearButton: FC<IButtonProps> = ({ isActive, onClick }) => {
+const ClearButton: FC<ITodoButtonProps> = ({ isActive, onClick }) => {
   return (
     <button
       className={`clear-button ${!isActive && ` hidden`}`}

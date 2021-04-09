@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { FilterActivityContext } from "../../../api/context/FilterTodosActivityContext";
+import { FilterActivityContext } from "../../../store/context/FilterTodosActivityContext";
 
 const FilterItems: FC = () => {
   const { filterActivityStatus, setFilterActivityStatus } = useContext(
@@ -9,18 +9,17 @@ const FilterItems: FC = () => {
 
   return (
     <ul className="todo-list-filter-items">
-      {values &&
-        values.map((value, i) => (
-          <li
-            key={i}
-            className={`todo-list-filter-item ${
-              i === filterActivityStatus && "active"
-            }`}
-            onClick={() => setFilterActivityStatus(i)}
-          >
-            {value}
-          </li>
-        ))}
+      {values.map((value, index) => (
+        <li
+          key={index}
+          className={`todo-list-filter-item ${
+            index === filterActivityStatus && "active"
+          }`}
+          onClick={() => setFilterActivityStatus(index)}
+        >
+          {value}
+        </li>
+      ))}
     </ul>
   );
 };

@@ -19,7 +19,7 @@ export const FilterActivityProvider: FC = ({ children }) => {
   const [
     filterActivityStatus,
     setFilterActivityStatus,
-  ] = useState<FilterActivityStatus>(0);
+  ] = useState<FilterActivityStatus>(FilterActivityStatus.ALL);
 
   return (
     <FilterActivityContext.Provider
