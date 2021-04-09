@@ -6,8 +6,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import { ContextType, TodosContext } from "../../api/context/TodosContext";
-import ITodo from "../../api/Todo";
+import { ContextType, TodosContext } from "../../store/context/TodosContext";
+import ITodo from "../../types/interfaces/ITodo";
 import CompleteButton from "../todo/buttons/CompleteButton";
 
 const TodoForm: FC = () => {

@@ -1,16 +1,16 @@
 import React, { FC, useContext, useState } from "react";
-import { TodosContext } from "../../../api/context/TodosContext";
-import ITodo from "../../../api/Todo";
+import { TodosContext } from "../../../store/context/TodosContext";
+import ITodo from "../../../types/interfaces/ITodo";
 import DeleteButton from "../buttons/DeleteButton";
 import TodoItemCheckbox from "./TodoItemCheckbox";
 import TodoItemValue from "./TodoItemValue";
 
 interface ITodoItemProps {
   todo: ITodo;
-  i: number;
+  index: number;
 }
 
-const TodoItem: FC<ITodoItemProps> = ({ todo, i }) => {
+const TodoItem: FC<ITodoItemProps> = ({ todo, index }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const { changeTodoActivityByIndex, removeTodoByIndex } = useContext(
@@ -18,11 +18,11 @@ const TodoItem: FC<ITodoItemProps> = ({ todo, i }) => {
   );
 
   const handleChangeActivity = () => {
-    changeTodoActivityByIndex(i);
+    changeTodoActivityByIndex(index);
   };
 
   const handleRemoveTodoItem = () => {
-    removeTodoByIndex(i);
+    removeTodoByIndex(index);
   };
 
   return (
@@ -31,7 +31,10 @@ const TodoItem: FC<ITodoItemProps> = ({ todo, i }) => {
         isActive={todo.isActive}
         onClick={handleChangeActivity}
       />
-      <TodoItemValue editTools={{ isEditing, setIsEditing }} {...{ todo, i }} />
+      <TodoItemValue
+        editTools={{ isEditing, setIsEditing }}
+        {...{ todo, index }}
+      />
       <DeleteButton isActive={!isEditing} onClick={handleRemoveTodoItem} />
     </div>
   );

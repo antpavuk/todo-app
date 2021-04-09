@@ -2,8 +2,8 @@ import { FC } from "react";
 import "./App.css";
 import Logo from "./components/Logo";
 import TodoMainComponent from "./components/todo/TodoMainComponent";
-import { TodosProvider } from "./api/context/TodosContext";
-import { FilterActivityProvider } from "./api/context/FilterTodosActivityContext";
+import { TodosProvider } from "./store/context/TodosContext";
+import { FilterActivityProvider } from "./store/context/FilterTodosActivityContext";
 
 const App: FC = () => {
   return (

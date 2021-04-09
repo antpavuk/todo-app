@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { RiCloseFill } from "react-icons/ri";
-import IButtonProps from "./IButtonProps";
+import ITodoButtonProps from "./ITodoButtonProps";
 
-const DeleteButton: FC<IButtonProps> = ({ isActive, onClick }) => {
+const DeleteButton: FC<ITodoButtonProps> = ({ isActive, onClick }) => {
   if (!isActive) return null;
   return (
     <button
