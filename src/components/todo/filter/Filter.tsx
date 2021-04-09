@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, useMemo } from "react";
 import { TodosContext } from "../../../api/context/TodosContext";
 import ClearButton from "../buttons/ClearButton";
 import FilterItems from "./FilterItems";
@@ -7,8 +7,14 @@ import TodoFilterTrack from "./TodoFilterTrack";
 const Filter: FC = () => {
   const { todos, clearCompletedTodos } = useContext(TodosContext);
 
-  const isEachTodoCompleted = todos.some(({ isActive }) => !isActive);
-  const todoItemsLeft = todos.filter(({ isActive }) => isActive).length;
+  const isEachTodoCompleted = useMemo(
+    () => todos.some(({ isActive }) => !isActive),
+    [todos]
+  );
+  const todoItemsLeft = useMemo(
+    () => todos.filter(({ isActive }) => isActive).length,
+    [todos]
+  );
 
   const handleClearCompletedTodos = () => clearCompletedTodos();
 

@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, useMemo } from "react";
 import {
   FilterActivityContext,
   FilterActivityStatus,
@@ -13,6 +13,7 @@ const TodoMainComponent: FC = () => {
   const { filterActivityStatus: filterTodosActivityStatus } = useContext(
     FilterActivityContext
   );
+  const isAnyTodoExisted = useMemo(() => todos.length !== 0, [todos.length]);
 
   return (
     <section className="main">
@@ -30,7 +31,7 @@ const TodoMainComponent: FC = () => {
             )
             .map((todo, i) => <TodoItem key={i} {...{ todo, i }} />)}
       </div>
-      {todos.length !== 0 && <Filter />}
+      {isAnyTodoExisted && <Filter />}
     </section>
   );
 };

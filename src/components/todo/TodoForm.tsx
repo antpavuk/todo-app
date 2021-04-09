@@ -3,6 +3,7 @@ import {
   FC,
   FormEventHandler,
   useContext,
+  useMemo,
   useState,
 } from "react";
 import { ContextType, TodosContext } from "../../api/context/TodosContext";
@@ -18,7 +19,10 @@ const TodoForm: FC = () => {
   } = useContext<ContextType>(TodosContext);
   const [todoInputValue, setTodoInputValue] = useState<string>("");
 
-  const isEachTodoCompleted = todos.some(({ isActive }) => !isActive);
+  const isEachTodoCompleted = useMemo(
+    () => todos.some(({ isActive }) => !isActive),
+    [todos]
+  );
 
   const handleTodoElementOnChange: ChangeEventHandler<HTMLInputElement> = e =>
     setTodoInputValue(e.target.value);

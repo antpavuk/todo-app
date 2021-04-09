@@ -24,8 +24,8 @@ export const FilterActivityProvider: FC = ({ children }) => {
   return (
     <FilterActivityContext.Provider
       value={{
-        filterActivityStatus: filterActivityStatus,
-        setFilterActivityStatus: setFilterActivityStatus,
+        filterActivityStatus,
+        setFilterActivityStatus,
       }}
     >
       {children}

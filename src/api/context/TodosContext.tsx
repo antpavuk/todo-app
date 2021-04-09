@@ -1,4 +1,4 @@
-import { useState, createContext, FC } from "react";
+import { useState, createContext, FC, useCallback } from "react";
 import ITodo from "../Todo";
 
 export type ContextType = {
@@ -25,16 +25,6 @@ export const TodosProvider: FC = ({ children }) => {
     setTodos(newTodos);
   };
 
-  const changeTodoValueByIndex = (value: string, i: number): void => {
-    const newTodos: ITodo[] = todos.map(
-      (todo, todoIndex): ITodo => {
-        return todoIndex === i ? { ...todo, value } : todo;
-      }
-    );
-
-    setTodos(newTodos);
-  };
-
   const changeTodoActivityByIndex = (i: number): void => {
     const newTodos: ITodo[] = todos.map(
       (todo, todoIndex): ITodo =>
@@ -44,7 +34,20 @@ export const TodosProvider: FC = ({ children }) => {
     setTodos(newTodos);
   };
 
-  const activateAllTodos = (): void => {
+  const changeTodoValueByIndex = useCallback(
+    (value: string, i: number): void => {
+      const newTodos: ITodo[] = todos.map(
+        (todo, todoIndex): ITodo => {
+          return todoIndex === i ? { ...todo, value } : todo;
+        }
+      );
+
+      setTodos(newTodos);
+    },
+    [todos]
+  );
+
+  const activateAllTodos = useCallback((): void => {
     const newTodos: ITodo[] = todos.map(
       (todo): ITodo => ({
         ...todo,
@@ -53,9 +56,9 @@ export const TodosProvider: FC = ({ children }) => {
     );
 
     setTodos(newTodos);
-  };
+  }, [todos]);
 
-  const completeAllTodos = (): void => {
+  const completeAllTodos = useCallback((): void => {
     const newTodos: ITodo[] = todos.map(
       (todo): ITodo => ({
         ...todo,
@@ -64,13 +67,13 @@ export const TodosProvider: FC = ({ children }) => {
     );
 
     setTodos(newTodos);
-  };
+  }, [todos]);
 
-  const clearCompletedTodos = () => {
+  const clearCompletedTodos = useCallback(() => {
     const newTodos = todos.filter(({ isActive }) => isActive);
 
     setTodos(newTodos);
-  };
+  }, [todos]);
 
   return (
     <TodosContext.Provider
