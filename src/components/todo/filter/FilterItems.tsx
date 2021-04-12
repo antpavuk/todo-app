@@ -1,10 +1,9 @@
-import { FC, useContext } from "react";
-import { FilterActivityContext } from "../../../store/context/FilterTodosActivityContext";
+import { FC } from "react";
+import { useActions, useRootStateSelector } from "../../../store/hooks";
 
 const FilterItems: FC = () => {
-  const { filterActivityStatus, setFilterActivityStatus } = useContext(
-    FilterActivityContext
-  );
+  const { filterTodosActivityStatus } = useRootStateSelector(state => state);
+  const { updateFilterActivityStatus } = useActions();
   const values = ["All", "Active", "Completed"];
 
   return (
@@ -13,9 +12,9 @@ const FilterItems: FC = () => {
         <li
           key={index}
           className={`todo-list-filter-item ${
-            index === filterActivityStatus && "active"
+            index === filterTodosActivityStatus && "active"
           }`}
-          onClick={() => setFilterActivityStatus(index)}
+          onClick={() => updateFilterActivityStatus(index)}
         >
           {value}
         </li>

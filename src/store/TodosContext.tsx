@@ -1,5 +1,5 @@
 import { useState, createContext, FC, useCallback } from "react";
-import ITodo from "../../types/interfaces/ITodo";
+import ITodo from "../types/interfaces/ITodo";
 
 export type ContextType = {
   todos: ITodo[];
@@ -11,6 +11,8 @@ export type ContextType = {
   activateAllTodos: () => void;
   clearCompletedTodos: () => void;
 };
+
+//export const store = createStore();
 
 export const TodosContext = createContext<ContextType>({} as ContextType);
 

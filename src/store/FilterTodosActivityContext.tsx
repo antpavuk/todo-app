@@ -1,10 +1,5 @@
 import { useState, createContext, FC, Dispatch, SetStateAction } from "react";
-
-export enum FilterActivityStatus {
-  ALL,
-  ACTIVE,
-  COMPLETED,
-}
+import FilterActivityStatus from "../types/enum/FilterActivityStatus";
 
 export type ContextType = {
   filterActivityStatus: FilterActivityStatus;

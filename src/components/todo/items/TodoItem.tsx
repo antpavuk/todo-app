@@ -1,5 +1,5 @@
-import React, { FC, useContext, useState } from "react";
-import { TodosContext } from "../../../store/context/TodosContext";
+import { FC, useState } from "react";
+import { useActions } from "../../../store/hooks";
 import ITodo from "../../../types/interfaces/ITodo";
 import DeleteButton from "../buttons/DeleteButton";
 import TodoItemCheckbox from "./TodoItemCheckbox";
@@ -10,19 +10,18 @@ interface ITodoItemProps {
   index: number;
 }
 
-const TodoItem: FC<ITodoItemProps> = ({ todo, index }) => {
+const TodoItem: FC<ITodoItemProps> = ({ todo }) => {
+  const { id } = todo;
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  const { changeTodoActivityByIndex, removeTodoByIndex } = useContext(
-    TodosContext
-  );
+  const { toggleTodoActivityById, removeTodoById } = useActions();
 
   const handleChangeActivity = () => {
-    changeTodoActivityByIndex(index);
+    toggleTodoActivityById(id);
   };
 
   const handleRemoveTodoItem = () => {
-    removeTodoByIndex(index);
+    removeTodoById(id);
   };
 
   return (
@@ -31,10 +30,7 @@ const TodoItem: FC<ITodoItemProps> = ({ todo, index }) => {
         isActive={todo.isActive}
         onClick={handleChangeActivity}
       />
-      <TodoItemValue
-        editTools={{ isEditing, setIsEditing }}
-        {...{ todo, index }}
-      />
+      <TodoItemValue editTools={{ isEditing, setIsEditing }} {...{ todo }} />
       <DeleteButton isActive={!isEditing} onClick={handleRemoveTodoItem} />
     </div>
   );

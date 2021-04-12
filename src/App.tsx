@@ -2,22 +2,25 @@ import { FC } from "react";
 import "./App.css";
 import Logo from "./components/Logo";
 import TodoMainComponent from "./components/todo/TodoMainComponent";
-import { TodosProvider } from "./store/context/TodosContext";
-import { FilterActivityProvider } from "./store/context/FilterTodosActivityContext";
+import { TodosProvider } from "./store/TodosContext";
+import { FilterActivityProvider } from "./store/FilterTodosActivityContext";
+import TodosAppProvider from "./store/TodosAppProvider";
 
 const App: FC = () => {
   return (
     <TodosProvider>
-      <div className="App">
-        <header>
-          <Logo />
-        </header>
-        <section>
-          <FilterActivityProvider>
-            <TodoMainComponent />
-          </FilterActivityProvider>
-        </section>
-      </div>
+      <TodosAppProvider>
+        <div className="App">
+          <header>
+            <Logo />
+          </header>
+          <section>
+            <FilterActivityProvider>
+              <TodoMainComponent />
+            </FilterActivityProvider>
+          </section>
+        </div>
+      </TodosAppProvider>
     </TodosProvider>
   );
 };

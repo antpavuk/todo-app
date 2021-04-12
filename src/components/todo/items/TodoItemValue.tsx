@@ -3,12 +3,11 @@ import {
   FocusEventHandler,
   MouseEventHandler,
   useState,
-  useContext,
   ChangeEventHandler,
   useRef,
   useLayoutEffect,
 } from "react";
-import { TodosContext } from "../../../store/context/TodosContext";
+import { useActions } from "../../../store/hooks";
 import ITodo from "../../../types/interfaces/ITodo";
 
 type EditTools = {
@@ -18,13 +17,13 @@ type EditTools = {
 
 interface ITodoItemValueProps {
   todo: ITodo;
-  index: number;
+
   editTools: EditTools;
 }
 
-const TodoItemValue: FC<ITodoItemValueProps> = ({ todo, index, editTools }) => {
-  const { changeTodoValueByIndex } = useContext(TodosContext);
-  const { value, isActive } = todo;
+const TodoItemValue: FC<ITodoItemValueProps> = ({ todo, editTools }) => {
+  const { updateTodoValueById } = useActions();
+  const { id, value, isActive } = todo;
   const { isEditing, setIsEditing } = editTools;
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +37,7 @@ const TodoItemValue: FC<ITodoItemValueProps> = ({ todo, index, editTools }) => {
     setCurrentInputValue(e.target.value);
 
   const handleBlurOnInput: FocusEventHandler<HTMLInputElement> = () => {
-    changeTodoValueByIndex(currentInputValue, index);
+    updateTodoValueById(currentInputValue, id);
     setIsEditing(false);
   };
 

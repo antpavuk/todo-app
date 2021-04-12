@@ -1,11 +1,12 @@
-import React, { FC, useContext, useMemo } from "react";
-import { TodosContext } from "../../../store/context/TodosContext";
+import { FC, useMemo } from "react";
+import { useActions, useRootStateSelector } from "../../../store/hooks";
 import ClearButton from "../buttons/ClearButton";
 import FilterItems from "./FilterItems";
 import TodoFilterTrack from "./TodoFilterTrack";
 
 const Filter: FC = () => {
-  const { todos, clearCompletedTodos } = useContext(TodosContext);
+  const { todos } = useRootStateSelector(state => state);
+  const { clearCompletedTodos } = useActions();
 
   const isEachTodoCompleted = useMemo(
     () => todos.some(({ isActive }) => !isActive),
@@ -19,14 +20,14 @@ const Filter: FC = () => {
   const handleClearCompletedTodos = () => clearCompletedTodos();
 
   return (
-    <div className="todo-list-filter active">
+    <footer className="todo-list-filter active">
       <TodoFilterTrack todoItemsLeft={todoItemsLeft} />
       <FilterItems />
       <ClearButton
         isActive={isEachTodoCompleted}
         onClick={handleClearCompletedTodos}
       />
-    </div>
+    </footer>
   );
 };
 

@@ -2,21 +2,15 @@ import {
   ChangeEventHandler,
   FC,
   FormEventHandler,
-  useContext,
   useMemo,
   useState,
 } from "react";
-import { ContextType, TodosContext } from "../../store/context/TodosContext";
-import ITodo from "../../types/interfaces/ITodo";
+import { useActions, useRootStateSelector } from "../../store/hooks";
 import CompleteButton from "../todo/buttons/CompleteButton";
 
 const TodoForm: FC = () => {
-  const {
-    todos,
-    addTodo,
-    activateAllTodos,
-    completeAllTodos,
-  } = useContext<ContextType>(TodosContext);
+  const { todos } = useRootStateSelector(state => state);
+  const { addTodo, activateAllTodos, completeAllTodos } = useActions();
   const [todoInputValue, setTodoInputValue] = useState<string>("");
 
   const isEachTodoCompleted = useMemo(
@@ -30,11 +24,7 @@ const TodoForm: FC = () => {
   const handleAddTodo: FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
 
-    const todo: ITodo = {
-      value: todoInputValue,
-      isActive: true,
-    };
-    addTodo(todo);
+    addTodo(todoInputValue);
     setTodoInputValue("");
 
     console.log(todos);
