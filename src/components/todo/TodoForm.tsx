@@ -1,22 +1,13 @@
-import {
-  ChangeEventHandler,
-  FC,
-  FormEventHandler,
-  useMemo,
-  useState,
-} from "react";
-import { useActions, useRootStateSelector } from "../../store/hooks";
+import { ChangeEventHandler, FC, FormEventHandler, useState } from "react";
+import useIsEachTodoCompletedSelector from "../../store/hooks/ selectors/useIsEachTodoCompletedSelector";
+import useActions from "../../store/hooks/useActions";
 import CompleteButton from "../todo/buttons/CompleteButton";
 
 const TodoForm: FC = () => {
-  const { todos } = useRootStateSelector(state => state);
   const { addTodo, activateAllTodos, completeAllTodos } = useActions();
   const [todoInputValue, setTodoInputValue] = useState<string>("");
 
-  const isEachTodoCompleted = useMemo(
-    () => todos.some(({ isActive }) => !isActive),
-    [todos]
-  );
+  const isEachTodoCompleted = useIsEachTodoCompletedSelector();
 
   const handleTodoElementOnChange: ChangeEventHandler<HTMLInputElement> = e =>
     setTodoInputValue(e.target.value);
@@ -26,20 +17,14 @@ const TodoForm: FC = () => {
 
     addTodo(todoInputValue);
     setTodoInputValue("");
-
-    console.log(todos);
   };
 
   const handleAllTodosActivity = () => {
-    const isEachTodoCompleted = todos.some(({ isActive }) => !isActive);
-
     if (isEachTodoCompleted) {
       activateAllTodos();
     } else {
       completeAllTodos();
     }
-
-    console.log(todos);
   };
 
   return (

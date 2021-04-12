@@ -1,15 +1,25 @@
 import FilterTodosActivityStatus from "../../types/enum/FilterActivityStatus";
 import { FilterTodosActivityStatusAction } from "../store-types/FilterTodoActivityStatusAction";
 
-const initialState = FilterTodosActivityStatus.ALL;
+type FilterTodosActivityStatusTodosReducerState = {
+  filterTodosActivityStatus: FilterTodosActivityStatus;
+};
+const initialState: FilterTodosActivityStatusTodosReducerState = {
+  filterTodosActivityStatus: FilterTodosActivityStatus.ALL,
+};
 
 export const filterTodosActivityStatusReducer = (
-  state: FilterTodosActivityStatus = initialState,
+  state: FilterTodosActivityStatusTodosReducerState = initialState,
   action: FilterTodosActivityStatusAction
-): FilterTodosActivityStatus => {
-  if (action.type === "UPDATE_FILTER_ACTIVITY_STATUS" && action.payload) {
-    return action.payload.filterTodosActivityStatus;
-  } else {
-    return state;
+): FilterTodosActivityStatusTodosReducerState => {
+  switch (action.type) {
+    case "UPDATE_FILTER_ACTIVITY_STATUS": {
+      if (!action.payload) return state;
+      const { filterTodosActivityStatus } = action.payload;
+      return action.payload ? { ...state, filterTodosActivityStatus } : state;
+    }
+    default: {
+      return state;
+    }
   }
 };

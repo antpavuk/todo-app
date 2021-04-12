@@ -1,21 +1,16 @@
-import { FC, useMemo } from "react";
-import { useActions, useRootStateSelector } from "../../../store/hooks";
+import { FC } from "react";
+import useIsEachTodoCompletedSelector from "../../../store/hooks/ selectors/useIsEachTodoCompletedSelector";
+import { useTodoItemsLeftSelector } from "../../../store/hooks/ selectors/useTodoItemsLeft";
+import useActions from "../../../store/hooks/useActions";
 import ClearButton from "../buttons/ClearButton";
 import FilterItems from "./FilterItems";
 import TodoFilterTrack from "./TodoFilterTrack";
 
 const Filter: FC = () => {
-  const { todos } = useRootStateSelector(state => state);
   const { clearCompletedTodos } = useActions();
 
-  const isEachTodoCompleted = useMemo(
-    () => todos.some(({ isActive }) => !isActive),
-    [todos]
-  );
-  const todoItemsLeft = useMemo(
-    () => todos.filter(({ isActive }) => isActive).length,
-    [todos]
-  );
+  const isEachTodoCompleted = useIsEachTodoCompletedSelector();
+  const todoItemsLeft = useTodoItemsLeftSelector();
 
   const handleClearCompletedTodos = () => clearCompletedTodos();
 

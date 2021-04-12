@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { useActions } from "../../../store/hooks";
+import useActions from "../../../store/hooks/useActions";
 import ITodo from "../../../types/interfaces/ITodo";
 import DeleteButton from "../buttons/DeleteButton";
 import TodoItemCheckbox from "./TodoItemCheckbox";

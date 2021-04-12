@@ -1,8 +1,10 @@
-import ITodo from "../../types/interfaces/ITodo";
 import IAction from "./IAction";
 import { TodosActionTypes } from "./TodosActionTypes";
 
-export type AddTodoAction = IAction<TodosActionTypes.ADD_TODO, { todo: ITodo }>;
+export type AddTodoAction = IAction<
+  TodosActionTypes.ADD_TODO,
+  { value: string }
+>;
 export type RemoveTodoAction = IAction<
   TodosActionTypes.REMOVE_TODO,
   { id: string }

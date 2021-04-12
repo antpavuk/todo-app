@@ -2,40 +2,70 @@ import ITodo from "../../types/interfaces/ITodo";
 import { TodosActionTypes } from "../store-types/TodosActionTypes";
 import { TodosAction } from "../store-types/TodosActions";
 
-const initialState: ITodo[] = [];
+type TodosReducerState = { todos: ITodo[] };
+const initialState: TodosReducerState = { todos: [] };
 
 const todosReducer = (
-  state: ITodo[] = initialState,
+  state: TodosReducerState = initialState,
   action: TodosAction
-): ITodo[] => {
+): TodosReducerState => {
+  const { todos } = state;
+
   switch (action.type) {
-    case TodosActionTypes.ADD_TODO:
-      return action.payload ? [action.payload.todo, ...state] : state;
+    case TodosActionTypes.ADD_TODO: {
+      if (!action.payload) return state;
 
-    case TodosActionTypes.REMOVE_TODO:
-      return state.filter(todo => todo?.id !== action?.payload?.id);
+      const todo: ITodo = {
+        id: new Date().toISOString(),
+        value: action.payload.value,
+        isActive: true,
+      };
 
-    case TodosActionTypes.TOGGLE_TODO_ACTIVITY:
-      return state.map(
+      const newTodos = [todo, ...todos];
+
+      return { ...state, todos: newTodos };
+    }
+
+    case TodosActionTypes.REMOVE_TODO: {
+      const newTodos = todos.filter(todo => todo?.id !== action?.payload?.id);
+
+      return {
+        ...state,
+        todos: newTodos,
+      };
+    }
+
+    case TodosActionTypes.TOGGLE_TODO_ACTIVITY: {
+      const newTodos = todos.map(
         (todo): ITodo =>
           todo.id === action.payload?.id
             ? { ...todo, isActive: !todo.isActive }
             : todo
       );
 
+      return {
+        ...state,
+        todos: newTodos,
+      };
+    }
     case TodosActionTypes.UPDATE_TODO_VALUE: {
       if (!action.payload) return state;
 
       const { value, id } = action.payload;
 
-      return state.map(
+      const newTodos = todos.map(
         (todo): ITodo => {
           return todo.id === id ? { ...todo, value } : todo;
         }
       );
+
+      return {
+        ...state,
+        todos: newTodos,
+      };
     }
-    case TodosActionTypes.ACTIVATE_ALL_TODOS:
-      return state.map(
+    case TodosActionTypes.ACTIVATE_ALL_TODOS: {
+      const newTodos = todos.map(
         (todo): ITodo =>
           todo.isActive
             ? todo
@@ -45,8 +75,13 @@ const todosReducer = (
               }
       );
 
-    case TodosActionTypes.COMPLETE_ALL_TODOS:
-      return state.map(
+      return {
+        ...state,
+        todos: newTodos,
+      };
+    }
+    case TodosActionTypes.COMPLETE_ALL_TODOS: {
+      const newTodos = todos.map(
         (todo): ITodo =>
           !todo.isActive
             ? todo
@@ -55,8 +90,19 @@ const todosReducer = (
                 isActive: false,
               }
       );
-    case TodosActionTypes.CLEAR_COMPLETED_TODOS:
-      return state.filter(({ isActive }) => isActive);
+      return {
+        ...state,
+        todos: newTodos,
+      };
+    }
+    case TodosActionTypes.CLEAR_COMPLETED_TODOS: {
+      const newTodos = todos.filter(({ isActive }) => isActive);
+
+      return {
+        ...state,
+        todos: newTodos,
+      };
+    }
     default:
       return state;
   }

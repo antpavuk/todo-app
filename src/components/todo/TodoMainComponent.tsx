@@ -1,28 +1,14 @@
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import Filter from "./filter/Filter";
 import TodoForm from "./TodoForm";
 import TodoItem from "./items/TodoItem";
-import FilterActivityStatus from "../../types/enum/FilterActivityStatus";
-import { useRootStateSelector } from "../../store/hooks";
+import useFilteredTodosSelector from "../../store/hooks/ selectors/useFilteredTodosSelector";
+import useIsAnyTodoExistedSelector from "../../store/hooks/ selectors/useIsAnyTodoExisted";
 
 const TodoMainComponent: FC = () => {
-  const { todos, filterTodosActivityStatus } = useRootStateSelector(
-    state => state
-  );
+  const filteredTodos = useFilteredTodosSelector();
 
-  const filteredTodos = useMemo(
-    () =>
-      todos.filter(
-        todo =>
-          filterTodosActivityStatus === FilterActivityStatus.ALL ||
-          (filterTodosActivityStatus === FilterActivityStatus.ACTIVE &&
-            todo.isActive) ||
-          (filterTodosActivityStatus === FilterActivityStatus.COMPLETED &&
-            !todo.isActive)
-      ),
-    [todos, filterTodosActivityStatus]
-  );
-  const isAnyTodoExisted = useMemo(() => todos.length !== 0, [todos.length]);
+  const isAnyTodoExisted = useIsAnyTodoExistedSelector();
 
   return (
     <section className="main">

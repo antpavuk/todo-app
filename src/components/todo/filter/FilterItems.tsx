@@ -1,9 +1,12 @@
 import { FC } from "react";
-import { useActions, useRootStateSelector } from "../../../store/hooks";
+import useFilterTodosActivityStatusSelector from "../../../store/hooks/ selectors/useFilterTodosActivityStatusSelector";
+import useActions from "../../../store/hooks/useActions";
 
 const FilterItems: FC = () => {
-  const { filterTodosActivityStatus } = useRootStateSelector(state => state);
+  const filterTodosActivityStatus = useFilterTodosActivityStatusSelector();
+
   const { updateFilterActivityStatus } = useActions();
+
   const values = ["All", "Active", "Completed"];
 
   return (

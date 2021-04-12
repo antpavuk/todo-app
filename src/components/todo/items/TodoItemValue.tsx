@@ -7,7 +7,7 @@ import {
   useRef,
   useLayoutEffect,
 } from "react";
-import { useActions } from "../../../store/hooks";
+import useActions from "../../../store/hooks/useActions";
 import ITodo from "../../../types/interfaces/ITodo";
 
 type EditTools = {

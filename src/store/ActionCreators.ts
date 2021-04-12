@@ -1,8 +1,5 @@
-// const addTodo = (todo: ITodo): void => setTodos([todo, ...todos]);
 import FilterTodosActivityStatus from "../types/enum/FilterActivityStatus";
-import ITodo from "../types/interfaces/ITodo";
 import { FilterTodosActivityStatusAction } from "./store-types/FilterTodoActivityStatusAction";
-// import { FilterTodosActivityStatusAction } from "./reducers/filterTodosActivityReducer";
 import {
   ActivateAllTodosAction,
   AddTodoAction,
@@ -15,15 +12,9 @@ import {
 import { TodosActionTypes } from "./store-types/TodosActionTypes";
 
 export const addTodo = (value: string): AddTodoAction => {
-  const todo: ITodo = {
-    id: new Date().toISOString(),
-    value,
-    isActive: true,
-  };
-
   return {
     type: TodosActionTypes.ADD_TODO,
-    payload: { todo },
+    payload: { value },
   };
 };
 

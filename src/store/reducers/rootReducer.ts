@@ -3,8 +3,8 @@ import { filterTodosActivityStatusReducer } from "./filterTodosActivityReducer";
 import todosReducer from "./todosReducer";
 
 const rootReducer = combineReducers({
-  todos: todosReducer,
-  filterTodosActivityStatus: filterTodosActivityStatusReducer,
+  todo: todosReducer,
+  filterStatus: filterTodosActivityStatusReducer,
 });
 
 export default rootReducer;
