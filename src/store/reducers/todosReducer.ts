@@ -1,5 +1,5 @@
 import ITodo from "../../types/interfaces/ITodo";
-import { TodosActionTypes } from "../store-types/TodosActionTypes";
+import ActionTypes from "../store-types/ActionTypes";
 import { TodosAction } from "../store-types/TodosActions";
 
 type TodosReducerState = { todos: ITodo[] };
@@ -12,7 +12,7 @@ const todosReducer = (
   const { todos } = state;
 
   switch (action.type) {
-    case TodosActionTypes.ADD_TODO: {
+    case ActionTypes.ADD_TODO: {
       if (!action.payload) return state;
 
       const todo: ITodo = {
@@ -26,7 +26,7 @@ const todosReducer = (
       return { ...state, todos: newTodos };
     }
 
-    case TodosActionTypes.REMOVE_TODO: {
+    case ActionTypes.REMOVE_TODO: {
       const newTodos = todos.filter(todo => todo?.id !== action?.payload?.id);
 
       return {
@@ -35,7 +35,7 @@ const todosReducer = (
       };
     }
 
-    case TodosActionTypes.TOGGLE_TODO_ACTIVITY: {
+    case ActionTypes.TOGGLE_TODO_ACTIVITY: {
       const newTodos = todos.map(
         (todo): ITodo =>
           todo.id === action.payload?.id
@@ -48,7 +48,7 @@ const todosReducer = (
         todos: newTodos,
       };
     }
-    case TodosActionTypes.UPDATE_TODO_VALUE: {
+    case ActionTypes.UPDATE_TODO_VALUE: {
       if (!action.payload) return state;
 
       const { value, id } = action.payload;
@@ -64,7 +64,7 @@ const todosReducer = (
         todos: newTodos,
       };
     }
-    case TodosActionTypes.ACTIVATE_ALL_TODOS: {
+    case ActionTypes.ACTIVATE_ALL_TODOS: {
       const newTodos = todos.map(
         (todo): ITodo =>
           todo.isActive
@@ -80,7 +80,7 @@ const todosReducer = (
         todos: newTodos,
       };
     }
-    case TodosActionTypes.COMPLETE_ALL_TODOS: {
+    case ActionTypes.COMPLETE_ALL_TODOS: {
       const newTodos = todos.map(
         (todo): ITodo =>
           !todo.isActive
@@ -95,7 +95,7 @@ const todosReducer = (
         todos: newTodos,
       };
     }
-    case TodosActionTypes.CLEAR_COMPLETED_TODOS: {
+    case ActionTypes.CLEAR_COMPLETED_TODOS: {
       const newTodos = todos.filter(({ isActive }) => isActive);
 
       return {

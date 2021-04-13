@@ -9,24 +9,24 @@ import {
   ToggleTodoActtivityAction,
   UpdateTodoValueAction,
 } from "./store-types/TodosActions";
-import { TodosActionTypes } from "./store-types/TodosActionTypes";
+import ActionTypes from "./store-types/ActionTypes";
 
 export const addTodo = (value: string): AddTodoAction => {
   return {
-    type: TodosActionTypes.ADD_TODO,
+    type: ActionTypes.ADD_TODO,
     payload: { value },
   };
 };
 
 export const removeTodoById = (id: string): RemoveTodoAction => ({
-  type: TodosActionTypes.REMOVE_TODO,
+  type: ActionTypes.REMOVE_TODO,
   payload: { id },
 });
 
 export const toggleTodoActivityById = (
   id: string
 ): ToggleTodoActtivityAction => ({
-  type: TodosActionTypes.TOGGLE_TODO_ACTIVITY,
+  type: ActionTypes.TOGGLE_TODO_ACTIVITY,
   payload: { id },
 });
 
@@ -34,25 +34,25 @@ export const updateTodoValueById = (
   value: string,
   id: string
 ): UpdateTodoValueAction => ({
-  type: TodosActionTypes.UPDATE_TODO_VALUE,
+  type: ActionTypes.UPDATE_TODO_VALUE,
   payload: { value, id },
 });
 
 export const activateAllTodos = (): ActivateAllTodosAction => ({
-  type: TodosActionTypes.ACTIVATE_ALL_TODOS,
+  type: ActionTypes.ACTIVATE_ALL_TODOS,
 });
 
 export const completeAllTodos = (): CompleteAllTodosAction => ({
-  type: TodosActionTypes.COMPLETE_ALL_TODOS,
+  type: ActionTypes.COMPLETE_ALL_TODOS,
 });
 
 export const clearCompletedTodos = (): ClearCompletedTodos => ({
-  type: TodosActionTypes.CLEAR_COMPLETED_TODOS,
+  type: ActionTypes.CLEAR_COMPLETED_TODOS,
 });
 
 export const updateFilterActivityStatus = (
   filterTodosActivityStatus: FilterTodosActivityStatus
 ): FilterTodosActivityStatusAction => ({
-  type: "UPDATE_FILTER_ACTIVITY_STATUS",
+  type: ActionTypes.UPDATE_FILTER_ACTIVITY_STATUS,
   payload: { filterTodosActivityStatus },
 });

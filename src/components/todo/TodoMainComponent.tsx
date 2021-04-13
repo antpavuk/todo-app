@@ -14,8 +14,8 @@ const TodoMainComponent: FC = () => {
     <section className="main">
       <TodoForm />
       <div className="todo-list">
-        {filteredTodos.map((todo, index) => (
-          <TodoItem key={index} {...{ todo, index }} />
+        {filteredTodos.map(todo => (
+          <TodoItem key={todo.id} {...{ todo }} />
         ))}
       </div>
       {isAnyTodoExisted && <Filter />}

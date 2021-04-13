@@ -1,4 +1,4 @@
-export enum TodosActionTypes {
+enum ActionTypes {
   ADD_TODO,
   REMOVE_TODO,
   TOGGLE_TODO_ACTIVITY,
@@ -6,4 +6,7 @@ export enum TodosActionTypes {
   ACTIVATE_ALL_TODOS,
   COMPLETE_ALL_TODOS,
   CLEAR_COMPLETED_TODOS,
+  UPDATE_FILTER_ACTIVITY_STATUS,
 }
+
+export default ActionTypes;

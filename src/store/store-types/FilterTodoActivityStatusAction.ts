@@ -1,7 +1,8 @@
 import FilterActivityStatus from "../../types/enum/FilterActivityStatus";
 import IAction from "./IAction";
+import ActionTypes from "./ActionTypes";
 
 export type FilterTodosActivityStatusAction = IAction<
-  "UPDATE_FILTER_ACTIVITY_STATUS",
+  ActionTypes.UPDATE_FILTER_ACTIVITY_STATUS,
   { filterTodosActivityStatus: FilterActivityStatus }
 >;

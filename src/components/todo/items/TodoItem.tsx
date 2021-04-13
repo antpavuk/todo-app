@@ -7,7 +7,6 @@ import TodoItemValue from "./TodoItemValue";
 
 interface ITodoItemProps {
   todo: ITodo;
-  index: number;
 }
 
 const TodoItem: FC<ITodoItemProps> = ({ todo }) => {

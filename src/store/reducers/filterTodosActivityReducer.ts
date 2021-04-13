@@ -1,4 +1,5 @@
 import FilterTodosActivityStatus from "../../types/enum/FilterActivityStatus";
+import ActionTypes from "../store-types/ActionTypes";
 import { FilterTodosActivityStatusAction } from "../store-types/FilterTodoActivityStatusAction";
 
 type FilterTodosActivityStatusTodosReducerState = {
@@ -13,7 +14,7 @@ export const filterTodosActivityStatusReducer = (
   action: FilterTodosActivityStatusAction
 ): FilterTodosActivityStatusTodosReducerState => {
   switch (action.type) {
-    case "UPDATE_FILTER_ACTIVITY_STATUS": {
+    case ActionTypes.UPDATE_FILTER_ACTIVITY_STATUS: {
       if (!action.payload) return state;
       const { filterTodosActivityStatus } = action.payload;
       return action.payload ? { ...state, filterTodosActivityStatus } : state;
