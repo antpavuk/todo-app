@@ -2,8 +2,8 @@ import ITodo from "../../types/interfaces/ITodo";
 import ActionTypes from "../store-types/ActionTypes";
 import { TodosAction } from "../store-types/TodosActions";
 
-type TodosReducerState = { todos: ITodo[] };
-const initialState: TodosReducerState = { todos: [] };
+type TodosReducerState = { todos: ITodo[]; error: Error | null };
+const initialState: TodosReducerState = { todos: [], error: null };
 
 const todosReducer = (
   state: TodosReducerState = initialState,
@@ -12,18 +12,20 @@ const todosReducer = (
   const { todos } = state;
 
   switch (action.type) {
+    case ActionTypes.FETCH_TODOS: {
+      return {
+        ...state,
+        error: null,
+        todos: action.payload ? action.payload.todos : [],
+      };
+    }
+
     case ActionTypes.ADD_TODO: {
       if (!action.payload) return state;
 
-      const todo: ITodo = {
-        id: new Date().toISOString(),
-        value: action.payload.value,
-        isActive: true,
-      };
+      const newTodos = [action.payload.todo, ...todos];
 
-      const newTodos = [todo, ...todos];
-
-      return { ...state, todos: newTodos };
+      return { ...state, error: null, todos: newTodos };
     }
 
     case ActionTypes.REMOVE_TODO: {
@@ -31,6 +33,7 @@ const todosReducer = (
 
       return {
         ...state,
+        error: null,
         todos: newTodos,
       };
     }
@@ -45,9 +48,11 @@ const todosReducer = (
 
       return {
         ...state,
+        error: null,
         todos: newTodos,
       };
     }
+
     case ActionTypes.UPDATE_TODO_VALUE: {
       if (!action.payload) return state;
 
@@ -61,48 +66,49 @@ const todosReducer = (
 
       return {
         ...state,
+        error: null,
         todos: newTodos,
       };
     }
+
     case ActionTypes.ACTIVATE_ALL_TODOS: {
-      const newTodos = todos.map(
-        (todo): ITodo =>
-          todo.isActive
-            ? todo
-            : {
-                ...todo,
-                isActive: true,
-              }
-      );
-
       return {
         ...state,
-        todos: newTodos,
+        error: null,
+        todos: action.payload!.todos,
       };
     }
+
     case ActionTypes.COMPLETE_ALL_TODOS: {
-      const newTodos = todos.map(
-        (todo): ITodo =>
-          !todo.isActive
-            ? todo
-            : {
-                ...todo,
-                isActive: false,
-              }
-      );
       return {
         ...state,
-        todos: newTodos,
+        error: null,
+        todos: action.payload!.todos,
       };
     }
-    case ActionTypes.CLEAR_COMPLETED_TODOS: {
-      const newTodos = todos.filter(({ isActive }) => isActive);
 
+    case ActionTypes.CLEAR_COMPLETED_TODOS: {
       return {
         ...state,
-        todos: newTodos,
+        error: null,
+        todos: action.payload!.todos,
       };
     }
+
+    case ActionTypes.SET_ERROR: {
+      return {
+        ...state,
+        error: action.payload?.err,
+      };
+    }
+
+    case ActionTypes.REMOVE_ERROR: {
+      return {
+        ...state,
+        error: null,
+      };
+    }
+
     default:
       return state;
   }

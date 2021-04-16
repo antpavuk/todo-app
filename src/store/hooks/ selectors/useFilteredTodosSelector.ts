@@ -2,13 +2,13 @@ import ITodo from "../../../types/interfaces/ITodo";
 import RootState from "../../store-types/RootState";
 import { createSelector } from "reselect";
 import useTypedSelector from "./useTypedSelector";
-import FilterActivityStatus from "../../../types/enum/FilterActivityStatus";
+import FilterTodos from "../../../types/enum/FilterTodos";
 
 const useFilteredTodosSelector = () => {
   const filteredTodosSelector = createSelector<
     RootState,
     ITodo[],
-    FilterActivityStatus,
+    FilterTodos,
     ITodo[]
   >(
     state => state.todo.todos,
@@ -16,10 +16,9 @@ const useFilteredTodosSelector = () => {
     (todos, filterTodosActivityStatus) =>
       todos.filter(
         todo =>
-          filterTodosActivityStatus === FilterActivityStatus.ALL ||
-          (filterTodosActivityStatus === FilterActivityStatus.ACTIVE &&
-            todo.isActive) ||
-          (filterTodosActivityStatus === FilterActivityStatus.COMPLETED &&
+          filterTodosActivityStatus === FilterTodos.ALL ||
+          (filterTodosActivityStatus === FilterTodos.ACTIVE && todo.isActive) ||
+          (filterTodosActivityStatus === FilterTodos.COMPLETED &&
             !todo.isActive)
       )
   );

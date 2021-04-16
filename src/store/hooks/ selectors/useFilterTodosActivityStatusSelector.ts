@@ -1,14 +1,10 @@
 import { createSelector } from "reselect";
-import FilterActivityStatus from "../../../types/enum/FilterActivityStatus";
+import FilterTodos from "../../../types/enum/FilterTodos";
 import RootState from "../../store-types/RootState";
 import useTypedSelector from "./useTypedSelector";
 
 const useFilterTodosActivityStatusSelector = () => {
-  const todosSelector = createSelector<
-    RootState,
-    FilterActivityStatus,
-    FilterActivityStatus
-  >(
+  const todosSelector = createSelector<RootState, FilterTodos, FilterTodos>(
     state => state.filterStatus.filterTodosActivityStatus,
     filterStatus => filterStatus
   );

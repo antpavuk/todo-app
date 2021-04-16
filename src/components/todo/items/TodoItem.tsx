@@ -16,7 +16,7 @@ const TodoItem: FC<ITodoItemProps> = ({ todo }) => {
   const { toggleTodoActivityById, removeTodoById } = useActions();
 
   const handleChangeActivity = () => {
-    toggleTodoActivityById(id);
+    toggleTodoActivityById(todo);
   };
 
   const handleRemoveTodoItem = () => {

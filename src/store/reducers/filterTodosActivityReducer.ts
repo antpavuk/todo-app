@@ -1,17 +1,18 @@
-import FilterTodosActivityStatus from "../../types/enum/FilterActivityStatus";
+import FilterTodos from "../../types/enum/FilterTodos";
 import ActionTypes from "../store-types/ActionTypes";
-import { FilterTodosActivityStatusAction } from "../store-types/FilterTodoActivityStatusAction";
+import { FilterTodosAction } from "../store-types/FilterTodosAction";
 
 type FilterTodosActivityStatusTodosReducerState = {
-  filterTodosActivityStatus: FilterTodosActivityStatus;
-};
-const initialState: FilterTodosActivityStatusTodosReducerState = {
-  filterTodosActivityStatus: FilterTodosActivityStatus.ALL,
+  filterTodosActivityStatus: FilterTodos;
 };
 
-export const filterTodosActivityStatusReducer = (
+const initialState: FilterTodosActivityStatusTodosReducerState = {
+  filterTodosActivityStatus: FilterTodos.ALL,
+};
+
+export const filterTodosReducer = (
   state: FilterTodosActivityStatusTodosReducerState = initialState,
-  action: FilterTodosActivityStatusAction
+  action: FilterTodosAction
 ): FilterTodosActivityStatusTodosReducerState => {
   switch (action.type) {
     case ActionTypes.UPDATE_FILTER_ACTIVITY_STATUS: {
