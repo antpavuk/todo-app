@@ -37,12 +37,9 @@ export const fetchTodos = () => {
 export const addTodo = (value: string) => {
   return async (dispatch: Dispatch<AddTodoAction | SetErrorAction>) => {
     try {
-      const res = await MainRouter.post(
-        "api/todos",
-        JSON.stringify({
-          value,
-        })
-      );
+      const res = await MainRouter.post("api/todos", {
+        value,
+      });
 
       dispatch({
         type: ActionTypes.ADD_TODO,
