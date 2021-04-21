@@ -1,198 +1,198 @@
 import FilterTodos from "../types/enum/FilterTodos";
 import { FilterTodosAction } from "./store-types/FilterTodosAction";
 import {
-  ActivateAllTodosAction,
-  AddTodoAction,
-  ClearCompletedTodos,
-  CompleteAllTodosAction,
-  FetchTodosAction,
-  RemoveTodoAction,
-  SetErrorAction,
-  ToggleTodoActivityAction,
-  UpdateTodoValueAction,
+  ActivateAllTodosActionError,
+  ActivateAllTodosActionRequest,
+  ActivateAllTodosActionSuccess,
+  AddTodoActionError,
+  AddTodoActionRequest,
+  AddTodoActionSuccess,
+  ClearCompletedTodosError,
+  ClearCompletedTodosRequest,
+  ClearCompletedTodosSuccess,
+  CompleteAllTodosActionError,
+  CompleteAllTodosActionRequest,
+  CompleteAllTodosActionSuccess,
+  FetchTodosActionRequest,
+  FetchTodosActionSuccess,
+  RemoveErrorAction as RemoveTodosErrorAction,
+  RemoveTodoActionError,
+  RemoveTodoActionRequest,
+  RemoveTodoActionSuccess,
+  ToggleTodoActivityActionError,
+  ToggleTodoActivityActionRequest,
+  ToggleTodoActivityActionSuccess,
+  UpdateTodoValueActionError,
+  UpdateTodoValueActionRequest,
+  UpdateTodoValueActionSuccess,
 } from "./store-types/TodosActions";
 import ActionTypes from "./store-types/ActionTypes";
-import { Dispatch } from "react";
-import MainRouter from "../MainRouter";
 import ITodo from "../types/interfaces/ITodo";
 
-export const fetchTodos = () => {
-  return async (dispatch: Dispatch<FetchTodosAction | SetErrorAction>) => {
-    try {
-      const res = await MainRouter.get("api/todos");
+// fetch todos
+export const fetchTodos = (): FetchTodosActionRequest => ({
+  type: ActionTypes.FETCH_TODOS_REQUEST,
+});
 
-      dispatch({
-        type: ActionTypes.FETCH_TODOS,
-        payload: { todos: res.data.todos },
-      });
-    } catch (err) {
-      dispatch({
-        type: ActionTypes.SET_ERROR,
-        payload: { err },
-      });
-    }
-  };
-};
+export const fetchTodosSuccess = (todos: ITodo[]): FetchTodosActionSuccess => ({
+  type: ActionTypes.FETCH_TODOS_SUCCESS,
+  payload: { todos },
+});
 
-export const addTodo = (value: string) => {
-  return async (dispatch: Dispatch<AddTodoAction | SetErrorAction>) => {
-    try {
-      const res = await MainRouter.post("api/todos", {
-        value,
-      });
+export const fetchTodosError = (error: any) => ({
+  type: ActionTypes.FETCH_TODOS_ERROR,
+  payload: { error },
+});
 
-      dispatch({
-        type: ActionTypes.ADD_TODO,
-        payload: { todo: res.data.todo },
-      });
-    } catch (err) {
-      dispatch({
-        type: ActionTypes.SET_ERROR,
-        payload: { err },
-      });
-    }
-  };
-};
+// add todo
+export const addTodo = (value: string): AddTodoActionRequest => ({
+  type: ActionTypes.ADD_TODO_REQUEST,
+  payload: { value },
+});
 
-export const removeTodoById = (id: string) => async (
-  dispatch: Dispatch<RemoveTodoAction | SetErrorAction>
-) => {
-  try {
-    const res = await MainRouter.delete(`api/todos/${id}`);
+export const addTodoSuccess = (todo: ITodo): AddTodoActionSuccess => ({
+  type: ActionTypes.ADD_TODO_SUCCESS,
+  payload: { todo },
+});
 
-    dispatch({
-      type: ActionTypes.REMOVE_TODO,
-      payload: { id: res.data.todo.id },
-    });
-  } catch (err) {
-    dispatch({
-      type: ActionTypes.SET_ERROR,
-      payload: { err },
-    });
-  }
-};
+export const addTodoError = (error: any): AddTodoActionError => ({
+  type: ActionTypes.ADD_TODO_ERROR,
+  payload: { error },
+});
 
-export const toggleTodoActivityById = (todo: ITodo) => async (
-  dispatch: Dispatch<ToggleTodoActivityAction | SetErrorAction>
-) => {
-  try {
-    const { id, isActive } = todo;
+// remove todo
+export const removeTodoById = (id: string): RemoveTodoActionRequest => ({
+  type: ActionTypes.REMOVE_TODO_REQUEST,
+  payload: { id },
+});
 
-    const res = await MainRouter.put(`api/todos/${id}`, {
-      isActive: !isActive,
-    });
+export const removeTodoByIdSuccess = (id: string): RemoveTodoActionSuccess => ({
+  type: ActionTypes.REMOVE_TODO_SUCCESS,
+  payload: { id },
+});
 
-    dispatch({
-      type: ActionTypes.TOGGLE_TODO_ACTIVITY,
-      payload: { id: res.data.todo.id },
-    });
-  } catch (err) {
-    dispatch({
-      type: ActionTypes.SET_ERROR,
-      payload: { err },
-    });
-  }
-};
+export const removeTodoByIdError = (error: any): RemoveTodoActionError => ({
+  type: ActionTypes.REMOVE_TODO_ERROR,
+  payload: { error },
+});
 
-export const updateTodoValueById = (value: string, id: string) => async (
-  dispatch: Dispatch<UpdateTodoValueAction | SetErrorAction>
-) => {
-  try {
-    const res = await MainRouter.put(`api/todos/${id}`, {
-      value,
-    });
+// toggle todo
+export const toggleTodoActivityById = (
+  todo: ITodo
+): ToggleTodoActivityActionRequest => ({
+  type: ActionTypes.TOGGLE_TODO_ACTIVITY_REQUEST,
+  payload: { todo },
+});
 
-    dispatch({
-      type: ActionTypes.UPDATE_TODO_VALUE,
-      payload: { id: res.data.todo.id, value: res.data.todo.value },
-    });
-  } catch (err) {
-    dispatch({
-      type: ActionTypes.SET_ERROR,
-      payload: { err },
-    });
-  }
-};
+export const toggleTodoActivityByIdSuccess = (
+  id: string
+): ToggleTodoActivityActionSuccess => ({
+  type: ActionTypes.TOGGLE_TODO_ACTIVITY_SUCCESS,
+  payload: { id },
+});
 
-export const activateAllTodos = () => async (
-  dispatch: Dispatch<ActivateAllTodosAction | SetErrorAction>
-) => {
-  try {
-    const res = await MainRouter.put(`api/todos`, null, {
-      params: {
-        action: "activate",
-      },
-    });
+export const toggleTodoActivityByIdError = (
+  error: any
+): ToggleTodoActivityActionError => ({
+  type: ActionTypes.TOGGLE_TODO_ACTIVITY_ERROR,
+  payload: { error },
+});
 
-    dispatch({
-      type: ActionTypes.ACTIVATE_ALL_TODOS,
-      payload: { todos: res.data.todos },
-    });
-  } catch (err) {
-    dispatch({
-      type: ActionTypes.SET_ERROR,
-      payload: { err },
-    });
-  }
-};
+// update todo
+export const updateTodoValueById = (
+  value: string,
+  id: string
+): UpdateTodoValueActionRequest => ({
+  type: ActionTypes.UPDATE_TODO_VALUE_REQUEST,
+  payload: { value, id },
+});
 
-export const completeAllTodos = () => async (
-  dispatch: Dispatch<CompleteAllTodosAction | SetErrorAction>
-) => {
-  try {
-    const res = await MainRouter.put(`api/todos`, null, {
-      params: {
-        action: "complete",
-      },
-    });
+export const updateTodoValueByIdSuccess = (
+  value: string,
+  id: string
+): UpdateTodoValueActionSuccess => ({
+  type: ActionTypes.UPDATE_TODO_VALUE_SUCCESS,
+  payload: { id, value },
+});
 
-    dispatch({
-      type: ActionTypes.COMPLETE_ALL_TODOS,
-      payload: {
-        todos: res.data.todos,
-      },
-    });
-  } catch (err) {
-    dispatch({
-      type: ActionTypes.SET_ERROR,
-      payload: { err },
-    });
-  }
-};
+export const updateTodoValueByIdError = (
+  error: any
+): UpdateTodoValueActionError => ({
+  type: ActionTypes.UPDATE_TODO_VALUE_ERROR,
+  payload: { error },
+});
 
-export const clearCompletedTodos = () => async (
-  dispatch: Dispatch<ClearCompletedTodos | SetErrorAction>
-) => {
-  try {
-    const res = await MainRouter.delete(`api/todos`, {
-      params: {
-        isActive: false,
-      },
-    });
+// activate
+export const activateAllTodos = (): ActivateAllTodosActionRequest => ({
+  type: ActionTypes.ACTIVATE_ALL_TODOS_REQUEST,
+});
 
-    dispatch({
-      type: ActionTypes.CLEAR_COMPLETED_TODOS,
-      payload: {
-        todos: res.data.todos,
-      },
-    });
-  } catch (err) {
-    dispatch({
-      type: ActionTypes.SET_ERROR,
-      payload: { err },
-    });
-  }
-};
+export const activateAllTodosSuccess = (
+  todos: ITodo[]
+): ActivateAllTodosActionSuccess => ({
+  type: ActionTypes.ACTIVATE_ALL_TODOS_SUCCESS,
+  payload: { todos },
+});
 
+export const activateAllTodosError = (
+  error: any
+): ActivateAllTodosActionError => ({
+  type: ActionTypes.ACTIVATE_ALL_TODOS_ERROR,
+  payload: { error },
+});
+
+// complete todo
+export const completeAllTodos = (): CompleteAllTodosActionRequest => ({
+  type: ActionTypes.COMPLETE_ALL_TODOS_REQUEST,
+});
+
+export const completeAllTodosSuccess = (
+  todos: ITodo[]
+): CompleteAllTodosActionSuccess => ({
+  type: ActionTypes.COMPLETE_ALL_TODOS_SUCCESS,
+  payload: {
+    todos,
+  },
+});
+
+export const completeAllTodosError = (
+  error: any
+): CompleteAllTodosActionError => ({
+  type: ActionTypes.COMPLETE_ALL_TODOS_ERROR,
+  payload: { error },
+});
+
+// clear completed todo
+export const clearCompletedTodos = (): // todos: ITodo[]
+ClearCompletedTodosRequest => ({
+  type: ActionTypes.CLEAR_COMPLETED_TODOS_REQUEST,
+});
+
+export const clearCompletedTodosSuccess = (
+  todos: ITodo[]
+): ClearCompletedTodosSuccess => ({
+  type: ActionTypes.CLEAR_COMPLETED_TODOS_SUCCESS,
+  payload: {
+    todos,
+  },
+});
+
+export const clearCompletedTodosError = (
+  error: any
+): ClearCompletedTodosError => ({
+  type: ActionTypes.CLEAR_COMPLETED_TODOS_ERROR,
+  payload: { error },
+});
+
+// remove todo
+export const removeTodosError = (): RemoveTodosErrorAction => ({
+  type: ActionTypes.REMOVE_TODOS_ERROR,
+});
+
+// update filter
 export const updateFilterActivityStatus = (
   filterTodosActivityStatus: FilterTodos
 ): FilterTodosAction => ({
-  type: ActionTypes.UPDATE_FILTER_ACTIVITY_STATUS,
+  type: ActionTypes.UPDATE_FILTER_ACTIVITY_STATUS_SUCCESS,
   payload: { filterTodosActivityStatus },
 });
-
-export const removeError = () => {
-  return {
-    type: ActionTypes.REMOVE_ERROR,
-  };
-};

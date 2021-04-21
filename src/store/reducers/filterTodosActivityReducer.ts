@@ -15,7 +15,7 @@ export const filterTodosReducer = (
   action: FilterTodosAction
 ): FilterTodosActivityStatusTodosReducerState => {
   switch (action.type) {
-    case ActionTypes.UPDATE_FILTER_ACTIVITY_STATUS: {
+    case ActionTypes.UPDATE_FILTER_ACTIVITY_STATUS_SUCCESS: {
       if (!action.payload) return state;
       const { filterTodosActivityStatus } = action.payload;
       return action.payload ? { ...state, filterTodosActivityStatus } : state;

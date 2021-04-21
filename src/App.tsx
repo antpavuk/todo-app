@@ -2,11 +2,11 @@ import { FC } from "react";
 import "./App.css";
 import Logo from "./components/Logo";
 import TodoMainComponent from "./components/todo/TodoMainComponent";
-import TodosAppProvider from "./store/TodosAppProvider";
+import TodoAppProvider from "./store/TodoAppProvider";
 
 const App: FC = () => {
   return (
-    <TodosAppProvider>
+    <TodoAppProvider>
       <div className="App">
         <header>
           <Logo />
@@ -15,7 +15,7 @@ const App: FC = () => {
           <TodoMainComponent />
         </section>
       </div>
-    </TodosAppProvider>
+    </TodoAppProvider>
   );
 };
 

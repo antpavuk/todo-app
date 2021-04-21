@@ -2,6 +2,7 @@
   --main-bg-color: #f1f1f8;
   --main-fg-color: #df98a4;
   --secondary-bg-color: #bebebe;
+  --danger-color: #8b0000;
   --main-box-width: 35vw;
   --main-padding-size: 5px;
   --main-font: 1em "Trebuchet MS" sans-serif;
@@ -146,6 +147,7 @@ p.strikethrough {
 }
 
 .delete-button,
+.close-button,
 .complete-button,
 .clear-button {
   font: var(--main-font);
@@ -154,13 +156,24 @@ p.strikethrough {
   border: none;
 }
 
-.delete-button {
-  color: #8b0000;
+.delete-button,
+.close-button {
+  color: var(--danger-color);
   opacity: 0.6;
 }
 
-.delete-button:hover {
+.delete-button:hover,
+.close-button:hover {
   opacity: 1;
+}
+
+.close-button {
+  display: inline;
+  float: right;
+}
+
+.close-button-icon {
+  size: 40;
 }
 
 .complete-button {
@@ -184,4 +197,35 @@ p.strikethrough {
 
 .undisplay {
   display: none;
+}
+
+.error-message {
+  max-height: 100px;
+  padding: var(--main-padding-size);
+}
+
+.error-message h3 {
+  color: var(--danger-color);
+}
+
+.modal-content {
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--main-bg-color);
+  box-shadow: 1px 5px 19px rgb(119, 117, 117);
+  z-index: 1000;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000000b3;
+  z-index: 1000;
 }
