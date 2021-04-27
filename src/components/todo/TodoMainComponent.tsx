@@ -31,7 +31,7 @@ const TodoMainComponent: FC = () => {
   }
 
   if (request) {
-    setTimeout(() => <Loader />, 300);
+    return <Loader />;
   }
 
   const handleModalClose = () => {

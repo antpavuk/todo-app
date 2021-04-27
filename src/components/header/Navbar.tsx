@@ -37,10 +37,6 @@ const Navbar = () => {
     setIsModalOpen(false);
   }
 
-  if (request) {
-    setTimeout(() => <Loader />, 300);
-  }
-
   useEffect(() => {
     if (location.pathname === RoutePaths.LOGIN) {
       setNavLinks([signUpNavLink]);
@@ -50,6 +46,10 @@ const Navbar = () => {
       setNavLinks([]);
     }
   }, [location]);
+
+  if (request) {
+    return <Loader />;
+  }
 
   return (
     <nav className="navbar">
