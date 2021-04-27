@@ -18,44 +18,19 @@ import {
   toggleTodoActivityByIdSuccess,
   updateTodoValueByIdError,
   updateTodoValueByIdSuccess,
-} from "../ActionCreators";
-import ActionTypes from "../store-types/ActionTypes";
+} from "../action-creators/todoActionCreators";
+import TodoActionTypes from "../store-types/enum/TodoActionTypes";
 import {
   AddTodoActionRequest,
   RemoveTodoActionRequest,
   ToggleTodoActivityActionRequest,
   UpdateTodoValueActionRequest,
-} from "../store-types/TodosActions";
+} from "../store-types/actions/TodoActions";
 
-export default function* todosSaga(): Generator<StrictEffect> {
-  yield takeEvery(ActionTypes.FETCH_TODOS_REQUEST, fetchTodosWorker);
-  yield takeEvery(ActionTypes.ADD_TODO_REQUEST, addTodoWorker);
-  yield takeEvery(
-    ActionTypes.TOGGLE_TODO_ACTIVITY_REQUEST,
-    toggleTodoActivityByIdWorker
-  );
-  yield takeEvery(
-    ActionTypes.UPDATE_TODO_VALUE_REQUEST,
-    updateTodoValueByIdWorker
-  );
-  yield takeEvery(
-    ActionTypes.ACTIVATE_ALL_TODOS_REQUEST,
-    activateAllTodosWorker
-  );
-  yield takeEvery(
-    ActionTypes.COMPLETE_ALL_TODOS_REQUEST,
-    completeAllTodosWorker
-  );
-  yield takeEvery(ActionTypes.REMOVE_TODO_REQUEST, removeTodoByIdWorker);
-  yield takeEvery(
-    ActionTypes.CLEAR_COMPLETED_TODOS_REQUEST,
-    clearCompletedTodosWorker
-  );
-}
-
-function* fetchTodosWorker() {
+function* getTodosWorker() {
   try {
     const response: AxiosResponse = yield call(TodoAPI.fetchTodos);
+    console.log("here");
     yield put(fetchTodosSuccess(response.data.todos));
   } catch (error) {
     yield put(fetchTodosError(error));
@@ -146,9 +121,34 @@ function* clearCompletedTodosWorker() {
   try {
     const response: AxiosResponse = yield call(TodoAPI.clearCompletedTodos);
 
-    console.log(response);
     yield put(clearCompletedTodosSuccess(response.data.todos));
   } catch (error) {
     yield put(clearCompletedTodosError(error));
   }
+}
+
+export default function* todosSaga(): Generator<StrictEffect> {
+  yield takeEvery(TodoActionTypes.GET_TODOS_REQUEST, getTodosWorker);
+  yield takeEvery(TodoActionTypes.ADD_TODO_REQUEST, addTodoWorker);
+  yield takeEvery(
+    TodoActionTypes.TOGGLE_TODO_ACTIVITY_REQUEST,
+    toggleTodoActivityByIdWorker
+  );
+  yield takeEvery(
+    TodoActionTypes.UPDATE_TODO_VALUE_REQUEST,
+    updateTodoValueByIdWorker
+  );
+  yield takeEvery(
+    TodoActionTypes.ACTIVATE_ALL_TODOS_REQUEST,
+    activateAllTodosWorker
+  );
+  yield takeEvery(
+    TodoActionTypes.COMPLETE_ALL_TODOS_REQUEST,
+    completeAllTodosWorker
+  );
+  yield takeEvery(TodoActionTypes.REMOVE_TODO_REQUEST, removeTodoByIdWorker);
+  yield takeEvery(
+    TodoActionTypes.CLEAR_COMPLETED_TODOS_REQUEST,
+    clearCompletedTodosWorker
+  );
 }

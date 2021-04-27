@@ -6,18 +6,19 @@ import useFilteredTodosSelector from "../../store/hooks/ selectors/useFilteredTo
 import useIsAnyTodoExistedSelector from "../../store/hooks/ selectors/useIsAnyTodoExisted";
 import useActions from "../../store/hooks/useActions";
 import useTypedSelector from "../../store/hooks/ selectors/useTypedSelector";
-import Modal from "../modal/Modal";
-import Spinner from "react-bootstrap/esm/Spinner";
-import ErrorMessage from "../modal/ErrorMessage";
+import Loader from "../Loader";
+import ErrorModal from "../modal/ErrorModal";
 
 const TodoMainComponent: FC = () => {
   const { fetchTodos } = useActions();
-  const { request, error } = useTypedSelector(state => state.todo);
 
   const filteredTodos = useFilteredTodosSelector();
   const isAnyTodoExisted = useIsAnyTodoExistedSelector();
 
+  const { request, error } = useTypedSelector(state => state.todo);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const { removeTodosError } = useActions();
 
   useEffect(() => {
     fetchTodos();
@@ -30,23 +31,25 @@ const TodoMainComponent: FC = () => {
   }
 
   if (request) {
-    setTimeout(() => <Spinner animation="border" variant="warning" />, 300);
+    setTimeout(() => <Loader />, 300);
   }
+
+  const handleModalClose = () => {
+    removeTodosError();
+  };
 
   return (
     <section className="main">
       <TodoForm />
-
       <div className="todo-list">
         {filteredTodos.map(todo => (
           <TodoItem key={todo.id} {...{ todo }} />
         ))}
       </div>
       {isAnyTodoExisted && <Filter />}
-
-      <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
-        <ErrorMessage message={error?.message}></ErrorMessage>
-      </Modal>
+      <ErrorModal
+        {...{ isModalOpen, setIsModalOpen, handleModalClose, error }}
+      />
     </section>
   );
 };

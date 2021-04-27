@@ -1,21 +1,43 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
-import Logo from "./components/Logo";
-import TodoMainComponent from "./components/todo/TodoMainComponent";
-import TodoAppProvider from "./store/TodoAppProvider";
+import Navbar from "./components/header/Navbar";
+
+import LandingPage from "./components/LandingPage";
+import TokenKeys from "./types/enum/TokenKeys";
+import useToken from "./store/hooks/ selectors/useToken";
+import useActions from "./store/hooks/useActions";
 
 const App: FC = () => {
+  const { updateToken, logOut } = useActions();
+  const currentToken = useToken();
+
+  useEffect(() => {
+    const updateTokens = () => {
+      try {
+        const token = localStorage.getItem(TokenKeys.TOKEN);
+        if (token && token !== currentToken) updateToken(token);
+
+        if (!token) logOut();
+      } catch (error) {
+        logOut();
+      }
+    };
+
+    updateTokens();
+  }, [localStorage.getItem]);
+
   return (
-    <TodoAppProvider>
+    <BrowserRouter>
       <div className="App">
         <header>
-          <Logo />
+          <Navbar />
         </header>
-        <section>
-          <TodoMainComponent />
+        <section className="landing">
+          <LandingPage />
         </section>
       </div>
-    </TodoAppProvider>
+    </BrowserRouter>
   );
 };
 
