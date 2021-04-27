@@ -16,13 +16,13 @@ type FormDataType = {
 
 interface IProps {
   title: string;
-  initialFormDataState: any;
+  initialState: any;
   onSubmit(formData: FormDataType): void;
 }
 
 const Form: FC<IProps> = ({
   title,
-  initialFormDataState,
+  initialState: initialFormDataState,
   onSubmit,
   children,
 }) => {

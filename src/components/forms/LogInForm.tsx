@@ -1,4 +1,5 @@
 import useActions from "../../store/hooks/useActions";
+import { INITIAL_STATE } from "./constants/LogInForm.constants copy";
 import Form from "./Form";
 
 const LogInForm = () => {
@@ -7,14 +8,14 @@ const LogInForm = () => {
     <>
       <Form
         title="log in"
-        initialFormDataState={{ email: "", password: "", username: "" }}
+        initialState={INITIAL_STATE}
         onSubmit={formData => {
           const { email, password } = formData;
 
           logIn(email, password);
         }}
       >
-        <input placeholder="Email" name="email" id="email" />
+        <input placeholder="Email" name="email" id="email" type="email" />
         <input
           placeholder="Password"
           name="password"

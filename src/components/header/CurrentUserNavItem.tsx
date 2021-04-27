@@ -8,11 +8,7 @@ const CurrentUserNavItem: FC = () => {
   const currentUser = useCurrentUser();
 
   useEffect(() => {
-    try {
-      getCurrentUser();
-    } catch (error) {
-      console.log(error);
-    }
+    getCurrentUser();
   }, [currentUser]);
 
   return (

@@ -31,7 +31,6 @@ export const signUp = (
 export const signUpSuccess = (tokenState: ITokenState): SignUpActionSuccess => {
   return {
     type: AuthActionTypes.SIGN_UP_SUCCESS,
-    payload: { tokenState },
   };
 };
 

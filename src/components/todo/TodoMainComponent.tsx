@@ -3,7 +3,7 @@ import Filter from "./filter/Filter";
 import TodoForm from "./TodoForm";
 import TodoItem from "./items/TodoItem";
 import useFilteredTodosSelector from "../../store/hooks/ selectors/useFilteredTodosSelector";
-import useIsAnyTodoExistedSelector from "../../store/hooks/ selectors/useIsAnyTodoExisted";
+import useIsAnyTodoExistedSelector from "../../store/hooks/ selectors/useIsAnyTodoExistedSelector";
 import useActions from "../../store/hooks/useActions";
 import useTypedSelector from "../../store/hooks/ selectors/useTypedSelector";
 import Loader from "../Loader";

@@ -5,11 +5,9 @@ import useTypedSelector from "./useTypedSelector";
 const useIsAuthorized = () => {
   const isAuthorized = createSelector<RootState, string, boolean>(
     state => state.auth.tokenState?.token!,
-    token => {
-      if (token) return true;
-      return false;
-    }
+    token => !!token
   );
+
   return useTypedSelector(isAuthorized);
 };
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import useIsAuthorized from "../store/hooks/ selectors/useIsAuthorized";
+import useIsAuthorized from "../store/hooks/ selectors/useIsAuthorizedSelector";
 import useTypedSelector from "../store/hooks/ selectors/useTypedSelector";
 import useActions from "../store/hooks/useActions";
 import LogInForm from "./forms/LogInForm";

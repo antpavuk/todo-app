@@ -1,19 +1,16 @@
 import useActions from "../../store/hooks/useActions";
+import { INITIAL_STATE } from "./constants/LogInForm.constants copy";
 import Form from "./Form";
 
 const SignUpForm = () => {
   const { signUp } = useActions();
+
   return (
     <>
       <Form
         title="sign up"
-        initialFormDataState={{
-          email: "",
-          password: "",
-          username: "",
-          age: 18,
-        }}
-        onSubmit={formData => {
+        initialState={INITIAL_STATE}
+        onSubmit={async formData => {
           const { email, password, username, age } = formData;
 
           signUp(email, password, username, age);

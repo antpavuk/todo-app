@@ -1,13 +1,17 @@
 import { AxiosResponse } from "axios";
-import { call, put, StrictEffect, takeEvery } from "redux-saga/effects";
+import { call, put, select, StrictEffect, takeEvery } from "redux-saga/effects";
 import AuthAPI from "../../api/endpoints/AuthAPI";
+import TokenKeys from "../../types/enum/TokenKeys";
 import {
+  logIn,
   logInError,
   logInSuccess,
+  logOut,
   logOutError,
   logOutSuccess,
   signUpError,
   signUpSuccess,
+  updateToken,
 } from "../action-creators/authActionCreators";
 import {
   LogInActionRequest,
@@ -22,6 +26,9 @@ function* signUpWorker({ payload }: SignUpActionRequest) {
     const { token, refreshToken } = response.data;
 
     yield put(signUpSuccess({ token, refreshToken }));
+
+    const { email, password } = payload!.user;
+    yield put(logIn(email, password));
   } catch (error) {
     yield put(signUpError(error));
   }
@@ -50,7 +57,21 @@ function* logOutWorker() {
   }
 }
 
+function* updateTokens() {
+  try {
+    const currentToken: string = yield select(state => state.currentToken);
+    const token = localStorage.getItem(TokenKeys.TOKEN);
+
+    if (token && token !== currentToken) yield put(updateToken(token));
+
+    if (!token) yield call(logOut);
+  } catch (error) {
+    yield call(logOut);
+  }
+}
+
 export default function* authSaga(): Generator<StrictEffect> {
+  yield call(updateTokens);
   yield takeEvery(AuthActionTypes.SIGN_UP_REQUEST, signUpWorker);
   yield takeEvery(AuthActionTypes.LOG_OUT_REQUEST, logOutWorker);
   yield takeEvery(AuthActionTypes.LOG_IN_REQUEST, logInWorker);

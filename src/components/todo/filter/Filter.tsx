@@ -1,6 +1,6 @@
 import { FC } from "react";
 import useIsEachTodoCompletedSelector from "../../../store/hooks/ selectors/useIsEachTodoCompletedSelector";
-import { useTodoItemsLeftSelector } from "../../../store/hooks/ selectors/useTodoItemsLeft";
+import { useTodoItemsLeftSelector } from "../../../store/hooks/ selectors/useTodoItemsLeftSelector";
 import useActions from "../../../store/hooks/useActions";
 import ClearButton from "../buttons/ClearButton";
 import FilterItems from "./FilterItems";

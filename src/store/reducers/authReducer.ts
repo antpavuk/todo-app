@@ -11,7 +11,7 @@ type AuthReducerState = {
 
 const initialState: AuthReducerState = {
   tokenState: null,
-  request: true,
+  request: false,
   error: null,
 };
 
@@ -46,16 +46,7 @@ const authReducer = (
 ): AuthReducerState => {
   switch (action.type) {
     case AuthActionTypes.SIGN_UP_SUCCESS: {
-      const { token, refreshToken } = action.payload!.tokenState;
-
-      try {
-        localStorage.setItem(TokenKeys.TOKEN, token!);
-        localStorage.setItem(TokenKeys.REFRESH_TOKEN, refreshToken!);
-
-        return setSuccessState(state, { token, refreshToken });
-      } catch (err) {
-        return setErrorState(state, err);
-      }
+      return setSuccessState(state, {});
     }
 
     case AuthActionTypes.SIGN_UP_REQUEST: {
@@ -113,10 +104,10 @@ const authReducer = (
         ...state.tokenState,
         token: action.payload!.token,
       } as ITokenState;
-      console.log(tokenState);
 
       return { ...state, tokenState };
     }
+
     case AuthActionTypes.REMOVE_AUTH_ERROR: {
       return {
         ...state,

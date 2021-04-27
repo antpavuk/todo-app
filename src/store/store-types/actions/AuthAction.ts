@@ -3,10 +3,7 @@ import { IUserSignUpData } from "../../../types/interfaces/IUser";
 import AuthActionTypes from "../enum/AuthActionTypes";
 import IAction from "./IAction";
 
-export type SignUpActionSuccess = IAction<
-  AuthActionTypes.SIGN_UP_SUCCESS,
-  { tokenState: ITokenState }
->;
+export type SignUpActionSuccess = IAction<AuthActionTypes.SIGN_UP_SUCCESS>;
 export type SignUpActionRequest = IAction<
   AuthActionTypes.SIGN_UP_REQUEST,
   { user: IUserSignUpData }
